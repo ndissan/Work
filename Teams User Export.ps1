@@ -1,0 +1,1 @@
+﻿Get-ADGroupMember -identity “Office_365_License_Teams” | Select Name,SamAccountName | Export-csv -path "path\Teams Members $((Get-Date).ToString('MM-dd-yyyy_hh-mm-ss')).csv" -NoTypeInformation
