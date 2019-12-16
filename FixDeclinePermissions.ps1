@@ -1,0 +1,3 @@
+﻿ #Import-Csv C:\scripts\rooms.csv | foreach {Set-CalendarProcessing $_.MicrosoftOnlineServicesID -AllowConflicts $true -ConflictPercentageAllowed 50 -MaximumConflictInstances 10}
+
+Import-Csv C:\scripts\rooms.csv | foreach {Get-CalendarProcessing $_.MicrosoftOnlineServicesID | Select Identity, AllowConflicts, ConflictPercentageAllowed, MaximumConflictInstances} | Export-csv "C:\scripts\Confernece Room Booking Issues\roomsBookingUpdated.csv" -Append -NoTypeInformation
