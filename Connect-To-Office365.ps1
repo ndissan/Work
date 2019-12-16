@@ -1,4 +1,8 @@
-﻿Write-Host 'Connecting to Office 365 PowerShell' -ForegroundColor Yellow
+﻿#Created to simplify how i connect to Office 365 Powershell
+#Twitter: Shaun.Hardneck
+#Web: http://thatlazyadmin.com
+
+Write-Host 'Connecting to Office 365 PowerShell' -ForegroundColor Yellow
 $O365Cred = Get-Credential
 $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $O365cred -Authentication Basic -AllowRedirection
 Write-Host 'Connection to Office 365 Successful' -ForegroundColor Yellow
