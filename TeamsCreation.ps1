@@ -1,4 +1,4 @@
-﻿#Function to create any channels as specified in the document
+#Function to create any channels as specified in the document
 function Create-Channel
 {   
    param (   
@@ -62,20 +62,24 @@ function Create-NewTeam
         $username = $cred.UserName
         Connect-MicrosoftTeams -Credential $cred
         $teams = Import-Csv -Path $ImportPath
+        #$MailNickName = $teams.TeamName
         foreach($team in $teams)
         {
-            $getteam= get-team |where-object { $_.displayname -eq $team.TeamsName}
+            $getteam= get-team |where-object { $_.displayname -eq $team.TeamName}
             If($getteam -eq $null)
             {
-                Write-Host "Start creating the team: " $team.TeamsName
-                $group = New-Team -MailNickName $team.TeamsName -displayname $team.TeamName -Visibility $team.TeamType
+                Write-Host "Start creating the team: " $team.TeamName
+                $group = New-Team -MailNickName ($team.TeamName -replace " ","") -displayname $team.TeamName -Visibility $team.TeamType
                 Write-Host "Creating channels..."
                 Create-Channel -ChannelName $team.ChannelName -GroupId $group.GroupId
                 Write-Host "Adding team members..."
                 Add-Users -Users $team.Members -GroupId $group.GroupId -CurrentUsername $username  -Role Member 
                 Write-Host "Adding team owners..."
                 Add-Users -Users $team.Owners -GroupId $group.GroupId -CurrentUsername $username  -Role Owner
-                Write-Host "Completed creating the team: " $team.TeamsName
+                #Write-Host "Setting MailNickName..."
+                #Sleep 3
+                #Set-Team -GroupID $group.GroupId -MailNickName $team.TeamName
+                Write-Host "Completed creating the team: " $team.TeamName
                 $team=$null
             }
          }
